@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">ColorArt</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="primary">Primary Color</string>
+    <string name="secondary">Secondary Color</string>
+    <string name="detail">Detail Color</string>
+
+</resources>

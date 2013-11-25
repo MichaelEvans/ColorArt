@@ -1,0 +1,37 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:0.6.+'
+    }
+}
+apply plugin: 'android-library'
+
+repositories {
+    mavenCentral()
+}
+
+android {
+    compileSdkVersion 18
+    buildToolsVersion "19.0.0"
+
+//    compileOptions {
+//        sourceCompatibility JavaVersion.VERSION_1_7
+//        targetCompatibility JavaVersion.VERSION_1_7
+//    }
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 16
+    }
+    release {
+        runProguard false
+        proguardFile 'proguard-rules.txt'
+        proguardFile getDefaultProguardFile('proguard-android-optimize.txt')
+    }
+}
+
+dependencies {
+    compile 'commons-collections:commons-collections:3.2.1'
+}
