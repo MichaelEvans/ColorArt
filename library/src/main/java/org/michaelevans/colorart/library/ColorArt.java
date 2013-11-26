@@ -55,8 +55,7 @@ public class ColorArt {
             Log.d(LOG_TAG, "Unable to detect primary color in image");
             if (hasDarkBackground) {
                 mPrimaryColor = Color.WHITE;
-            }
-            else {
+            } else {
                 mPrimaryColor = Color.BLACK;
             }
         }
@@ -65,8 +64,7 @@ public class ColorArt {
             Log.d(LOG_TAG, "Unable to detect secondary in image");
             if (hasDarkBackground) {
                 mSecondaryColor = Color.WHITE;
-            }
-            else {
+            } else {
                 mSecondaryColor = Color.BLACK;
             }
         }
@@ -75,8 +73,7 @@ public class ColorArt {
             Log.d(LOG_TAG, "Unable to detect detail color in image");
             if (hasDarkBackground) {
                 mDetailColor = Color.WHITE;
-            }
-            else {
+            } else {
                 mDetailColor = Color.BLACK;
             }
         }
@@ -235,8 +232,7 @@ public class ColorArt {
 
         if (bLum > fLum) {
             contrast = (bLum + 0.05) / (fLum + 0.05);
-        }
-        else {
+        } else {
             contrast = (fLum + 0.05) / (bLum + 0.05);
         }
 
