@@ -27,16 +27,18 @@ import java.util.Collections;
 import java.util.Iterator;
 
 public class ColorArt {
-    private double COLOR_THRESHOLD_MINIMUM_PERCENTAGE = .01;
+    private double COLOR_THRESHOLD_MINIMUM_PERCENTAGE = 0.01;
+    private double EDGE_COLOR_DISCARD_THRESHOLD = 0.3;
+    private float MINIMUM_SATURATION_THRESHOLD = 0.15f;
     private static String LOG_TAG = ColorArt.class.getSimpleName();
 
     private Bitmap mBitmap;
 
-    private HashBag imageColors;
-    private int backgroundColor;
-    private Integer primaryColor = null;
-    private Integer secondaryColor = null;
-    private Integer detailColor = null;
+    private HashBag mImageColors;
+    private int mBackgroundColor;
+    private Integer mPrimaryColor = null;
+    private Integer mSecondaryColor = null;
+    private Integer mDetailColor = null;
 
 
     public ColorArt(Bitmap bitmap) {
@@ -45,32 +47,38 @@ public class ColorArt {
     }
 
     private void analyzeImage() {
-        backgroundColor = findEdgeColor();
-        findTextColors(imageColors);
-        boolean darkBackground = isDarkColor(backgroundColor);
+        mBackgroundColor = findEdgeColor();
+        findTextColors(mImageColors);
+        boolean hasDarkBackground = isDarkColor(mBackgroundColor);
 
-        if (primaryColor == null) {
-            Log.d(LOG_TAG, "missed primary");
-            if (darkBackground)
-                primaryColor = Color.WHITE;
-            else
-                primaryColor = Color.BLACK;
+        if (mPrimaryColor == null) {
+            Log.d(LOG_TAG, "Unable to detect primary color in image");
+            if (hasDarkBackground) {
+                mPrimaryColor = Color.WHITE;
+            }
+            else {
+                mPrimaryColor = Color.BLACK;
+            }
         }
 
-        if (secondaryColor == null) {
-            Log.d(LOG_TAG, "missed secondary");
-            if (darkBackground)
-                secondaryColor = Color.WHITE;
-            else
-                secondaryColor = Color.BLACK;
+        if (mSecondaryColor == null) {
+            Log.d(LOG_TAG, "Unable to detect secondary in image");
+            if (hasDarkBackground) {
+                mSecondaryColor = Color.WHITE;
+            }
+            else {
+                mSecondaryColor = Color.BLACK;
+            }
         }
 
-        if (detailColor == null) {
-            Log.d(LOG_TAG, "missed detail");
-            if (darkBackground)
-                detailColor = Color.WHITE;
-            else
-                detailColor = Color.BLACK;
+        if (mDetailColor == null) {
+            Log.d(LOG_TAG, "Unable to detect detail color in image");
+            if (hasDarkBackground) {
+                mDetailColor = Color.WHITE;
+            }
+            else {
+                mDetailColor = Color.BLACK;
+            }
         }
     }
 
@@ -78,26 +86,28 @@ public class ColorArt {
         int height = mBitmap.getHeight();
         int width = mBitmap.getWidth();
 
-        imageColors = new HashBag();
+        mImageColors = new HashBag();
         HashBag leftImageColors = new HashBag();
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
                 if (x == 0) {
                     leftImageColors.add(Integer.valueOf(mBitmap.getPixel(x, y)));
                 }
-                imageColors.add(Integer.valueOf(mBitmap.getPixel(x, y)));
+                mImageColors.add(Integer.valueOf(mBitmap.getPixel(x, y)));
             }
         }
 
         ArrayList<CountedColor> sortedColors = new ArrayList<CountedColor>();
 
-        Iterator iterator = leftImageColors.iterator();
+        int randomColorThreshold = (int) (height * COLOR_THRESHOLD_MINIMUM_PERCENTAGE);
+        Iterator<Integer> iterator = leftImageColors.iterator();
         while (iterator.hasNext()) {
-            Integer color = (Integer) iterator.next();
+            Integer color = iterator.next();
             int colorCount = leftImageColors.getCount(color);
-            int randomColorThreshold = (int) (height * COLOR_THRESHOLD_MINIMUM_PERCENTAGE);
-            if (colorCount < randomColorThreshold)
+            if (colorCount < randomColorThreshold) {
                 continue;
+            }
+
             CountedColor container = new CountedColor(color, colorCount);
             sortedColors.add(container);
         }
@@ -105,38 +115,41 @@ public class ColorArt {
         Collections.sort(sortedColors);
 
         CountedColor proposedEdgeColor = null;
-        if (sortedColors.size() > 0) {
-            proposedEdgeColor = sortedColors.get(0);
-            if (proposedEdgeColor.isBlackOrWhite()) {
-                for (int i = 1; i < sortedColors.size(); i++) {
-                    CountedColor nextProposedColor = sortedColors.get(i);
-                    if ((double) nextProposedColor.getCount() / proposedEdgeColor.getCount() > .3) {
-                        if (!nextProposedColor.isBlackOrWhite()) {
-                            proposedEdgeColor = nextProposedColor;
-                            break;
-                        }
-                    } else {
-                        break;
-                    }
-                }
+        Iterator<CountedColor> sortedColorIterator = sortedColors.iterator();
+        if (!sortedColorIterator.hasNext()) {
+            return Color.BLACK;
+        }
+
+        proposedEdgeColor = sortedColorIterator.next();
+        if (!proposedEdgeColor.isBlackOrWhite()) {
+            return proposedEdgeColor.getColor();
+        }
+
+        while (sortedColorIterator.hasNext()) {
+            CountedColor nextProposedColor = sortedColorIterator.next();
+            double edgeColorRatio = (double) nextProposedColor.getCount() / proposedEdgeColor.getCount();
+            if (edgeColorRatio <= EDGE_COLOR_DISCARD_THRESHOLD) {
+                break;
+            }
+
+            if (!nextProposedColor.isBlackOrWhite()) {
+                proposedEdgeColor = nextProposedColor;
+                break;
             }
         }
 
-        if (proposedEdgeColor == null)
-            return Color.BLACK;
-        else
-            return proposedEdgeColor.getColor();
+        return proposedEdgeColor.getColor();
     }
 
     private void findTextColors(HashBag colors) {
-        Iterator iterator = colors.iterator();
+        Iterator<Integer> iterator = colors.iterator();
         int currentColor;
         ArrayList<CountedColor> sortedColors = new ArrayList<CountedColor>();
-        boolean findDarkTextColor = !isDarkColor(backgroundColor);
+        boolean findDarkTextColor = !isDarkColor(mBackgroundColor);
 
         while (iterator.hasNext()) {
-            currentColor = (Integer) iterator.next();
-            currentColor = colorWithMinimumSaturation(currentColor, .15f);
+            currentColor = iterator.next();
+            currentColor = colorWithMinimumSaturation(currentColor, MINIMUM_SATURATION_THRESHOLD);
             if (isDarkColor(currentColor) == findDarkTextColor) {
                 int colorCount = colors.getCount(currentColor);
                 CountedColor container = new CountedColor(currentColor, colorCount);
@@ -148,42 +161,40 @@ public class ColorArt {
 
         for (CountedColor currentContainer : sortedColors) {
             currentColor = currentContainer.getColor();
-            if (primaryColor == null) {
-                if (isContrastingColor(currentColor, backgroundColor)) {
-                    primaryColor = currentColor;
-                }
-            } else if (secondaryColor == null) {
-                if (!isDistinctColor(primaryColor, currentColor) || !isContrastingColor(currentColor, backgroundColor)) {
+            if (mPrimaryColor == null && isContrastingColor(currentColor, mBackgroundColor)) {
+                mPrimaryColor = currentColor;
+            } else if (mSecondaryColor == null) {
+                if (!isDistinctColor(mPrimaryColor, currentColor) ||
+                        !isContrastingColor(currentColor, mBackgroundColor)) {
                     continue;
-                } else {
-                    secondaryColor = currentColor;
                 }
-            } else if (detailColor == null) {
-                if (!isDistinctColor(secondaryColor, currentColor) || !isDistinctColor(primaryColor, currentColor) || !isContrastingColor(currentColor, backgroundColor)) {
+                mSecondaryColor = currentColor;
+            } else if (mDetailColor == null) {
+                if (!isDistinctColor(mSecondaryColor, currentColor) ||
+                        !isDistinctColor(mPrimaryColor, currentColor) ||
+                        !isContrastingColor(currentColor, mBackgroundColor)) {
                     continue;
-                } else {
-                    detailColor = currentColor;
-                    break;
                 }
+                mDetailColor = currentColor;
+                break;
             }
         }
     }
 
-
     public int getBackgroundColor() {
-        return backgroundColor;
+        return mBackgroundColor;
     }
 
     public int getPrimaryColor() {
-        return primaryColor;
+        return mPrimaryColor;
     }
 
     public int getSecondaryColor() {
-        return secondaryColor;
+        return mSecondaryColor;
     }
 
     public int getDetailColor() {
-        return detailColor;
+        return mDetailColor;
     }
 
     //helpers
@@ -204,10 +215,7 @@ public class ColorArt {
 
         double lum = 0.2126 * r + 0.7152 * g + 0.0722 * b;
 
-        if (lum < .5) {
-            return true;
-        }
-        return false;
+        return lum < 0.5;
     }
 
     private boolean isContrastingColor(int backgroundColor, int foregroundColor) {
@@ -225,16 +233,17 @@ public class ColorArt {
 
         double contrast;
 
-        if (bLum > fLum)
+        if (bLum > fLum) {
             contrast = (bLum + 0.05) / (fLum + 0.05);
-        else
+        }
+        else {
             contrast = (fLum + 0.05) / (bLum + 0.05);
+        }
 
         return contrast > 1.6;
     }
 
     private boolean isDistinctColor(int colorA, int colorB) {
-
         double r = (double) Color.red(colorA) / 255;
         double g = (double) Color.green(colorA) / 255;
         double b = (double) Color.blue(colorA) / 255;
@@ -253,8 +262,8 @@ public class ColorArt {
                 Math.abs(a - a1) > threshold) {
             // check for grays, prevent multiple gray colors
 
-            if (Math.abs(r - g) < .03 && Math.abs(r - b) < .03) {
-                if (Math.abs(r1 - g1) < .03 && Math.abs(r1 - b1) < .03)
+            if (Math.abs(r - g) < .03 && Math.abs(r - b) < .03 &&
+                    (Math.abs(r1 - g1) < .03 && Math.abs(r1 - b1) < .03)) {
                     return false;
             }
 
@@ -262,10 +271,6 @@ public class ColorArt {
         }
 
         return false;
-    }
-
-    private String intToColor(int intColor) {
-        return String.format("#%08X", (0xFFFFFF & intColor));
     }
 
     private class CountedColor implements Comparable<CountedColor> {
