@@ -1,0 +1,36 @@
+##About
+
+ColorArt is a library that uses an image to create a themed image/text display. It's a port of the idea found on the [Panic Blog](http://www.panic.com/blog/itunes-11-and-colors/) to work on Android.
+
+##Usage
+
+Right now you'll need to download and add this as a library project, but it will soon be available on Maven Central for use with Gradle.
+
+```
+Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.album);
+ColorArt colorArt = new ColorArt(bitmap);
+colorArt.getBackgroundColor()
+colorArt.getPrimaryColor()
+colorArt.getSecondaryColor()
+colorArt.getDetailColor()
+```
+
+##Screenshots
+
+##License
+
+```
+Copyright 2013 Michael Evans
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+```
