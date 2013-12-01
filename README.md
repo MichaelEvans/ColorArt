@@ -7,8 +7,11 @@ ColorArt is a library that uses an image to create a themed image/text display. 
 Right now you'll need to download and add this as a library project, but it will soon be available on Maven Central for use with Gradle.
 
 ```
+// get a bitmap and analyze it
 Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.album);
 ColorArt colorArt = new ColorArt(bitmap);
+
+// get the colors
 colorArt.getBackgroundColor()
 colorArt.getPrimaryColor()
 colorArt.getSecondaryColor()
@@ -16,6 +19,10 @@ colorArt.getDetailColor()
 ```
 
 ##Screenshots
+
+![Jim Noir](https://github.com/MichaelEvans/ColorArt/raw/master/img/jim_noir.png)
+![Ping Pong Orchestra](https://github.com/MichaelEvans/ColorArt/raw/master/img/ping_pong_orchestra.png)
+![Hotel Shampoo](https://github.com/MichaelEvans/ColorArt/raw/master/img/hotel_shampoo.png)
 
 ##License
 
