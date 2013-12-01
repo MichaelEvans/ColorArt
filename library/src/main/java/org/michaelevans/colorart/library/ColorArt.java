@@ -285,7 +285,14 @@ public class ColorArt {
         }
 
         public boolean isBlackOrWhite() {
-            return false;//TODO
+            double r = (double) Color.red(mColor) / 255;
+            double g = (double) Color.green(mColor) / 255;
+            double b = (double) Color.blue(mColor) / 255;
+
+            if ((r > .91 && g > .91 && b > .91) || (r < .09 && g < .09 && b < .09)) // color is white or black
+                return true;
+
+            return false;
         }
 
         public int getCount() {
