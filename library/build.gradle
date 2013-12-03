@@ -16,14 +16,9 @@ android {
     compileSdkVersion 18
     buildToolsVersion "19.0.0"
 
-//    compileOptions {
-//        sourceCompatibility JavaVersion.VERSION_1_7
-//        targetCompatibility JavaVersion.VERSION_1_7
-//    }
-
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 16
+        targetSdkVersion 19
     }
     release {
         runProguard false
@@ -35,3 +30,5 @@ android {
 dependencies {
     compile 'commons-collections:commons-collections:3.2.1'
 }
+
+apply from: 'https://raw.github.com/chrisbanes/gradle-mvn-push/master/gradle-mvn-push.gradle'
