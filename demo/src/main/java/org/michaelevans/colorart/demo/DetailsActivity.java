@@ -20,16 +20,17 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.michaelevans.colorart.library.ColorArt;
+import org.michaelevans.colorart.library.FadingImageView;
 
 public class DetailsActivity extends Activity {
+
+    private FadingImageView mImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +45,9 @@ public class DetailsActivity extends Activity {
         Bitmap album = BitmapFactory.decodeResource(getResources(), SampleData.imageIds[position]);
         ColorArt colorArt = new ColorArt(album);
 
-        ImageView mImageView = (ImageView) findViewById(R.id.image);
+        mImageView = (FadingImageView) findViewById(R.id.image);
         mImageView.setImageBitmap(album);
+        mImageView.setBackgroundColor(colorArt.getBackgroundColor(), FadingImageView.FadeSide.LEFT);
 
         View container = findViewById(R.id.container);
         container.setBackgroundColor(colorArt.getBackgroundColor());
@@ -62,7 +64,7 @@ public class DetailsActivity extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.details, menu);
         return true;
     }
 
@@ -72,7 +74,14 @@ public class DetailsActivity extends Activity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_fade) {
+            if(item.isChecked()){
+                mImageView.setFadeEnabled(true);
+                item.setChecked(false);
+            }else{
+                mImageView.setFadeEnabled(false);
+                item.setChecked(true);
+            }
             return true;
         }
         return super.onOptionsItemSelected(item);

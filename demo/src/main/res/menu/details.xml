@@ -2,8 +2,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".MainActivity" >
     
-    <item android:id="@+id/action_settings"
-        android:title="@string/action_settings"
+    <item android:id="@+id/action_fade"
+        android:title="@string/action_fade"
         android:orderInCategory="100"
-        android:showAsAction="never" />
+        android:showAsAction="never"
+        android:checkable="true"
+        android:checked="false"/>
 </menu>

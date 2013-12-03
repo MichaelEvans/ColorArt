@@ -27,7 +27,7 @@
             style="?android:attr/textAppearanceMedium"
             android:layout_height="wrap_content"/>
     </LinearLayout>
-    <ImageView
+    <org.michaelevans.colorart.library.FadingImageView
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_gravity="end"
