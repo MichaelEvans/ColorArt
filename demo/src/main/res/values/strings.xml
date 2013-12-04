@@ -7,5 +7,6 @@
     <string name="primary">Primary Color</string>
     <string name="secondary">Secondary Color</string>
     <string name="detail">Detail Color</string>
+    <string name="action_fade">Disable Fading?</string>
 
 </resources>
