@@ -13,12 +13,14 @@ repositories {
 }
 
 android {
-    compileSdkVersion 18
+    compileSdkVersion 19
     buildToolsVersion "19.0.0"
 
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 19
+        versionName project.VERSION_NAME
+        versionCode Integer.parseInt(project.VERSION_CODE)
     }
     release {
         runProguard false
@@ -31,4 +33,4 @@ dependencies {
     compile 'commons-collections:commons-collections:3.2.1'
 }
 
-apply from: 'https://raw.github.com/chrisbanes/gradle-mvn-push/master/gradle-mvn-push.gradle'
+apply from: '../maven_push.gradle'
