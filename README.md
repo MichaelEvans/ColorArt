@@ -18,6 +18,18 @@ colorArt.getSecondaryColor()
 colorArt.getDetailColor()
 ```
 
+###FadingImageView
+
+```
+mFadingImageView.setBackgroundColor(colorArt.getBackgroundColor(), FadingImageView.FadeSide.LEFT);
+```
+This will set the fading edge on the left side, with that background color. You can also enable/disable the fade with:
+
+```
+mImageView.setFadeEnabled(true/false);
+```
+
+
 ##Screenshots
 
 ![Jim Noir](https://github.com/MichaelEvans/ColorArt/raw/master/img/jim_noir.png)
