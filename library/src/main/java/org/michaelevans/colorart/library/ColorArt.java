@@ -20,8 +20,6 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.util.Log;
 
-import org.apache.commons.collections.bag.HashBag;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -34,7 +32,7 @@ public class ColorArt {
 
     private Bitmap mBitmap;
 
-    private HashBag mImageColors;
+    private HashBag<Integer> mImageColors;
     private int mBackgroundColor;
     private Integer mPrimaryColor = null;
     private Integer mSecondaryColor = null;
@@ -83,14 +81,14 @@ public class ColorArt {
         int height = mBitmap.getHeight();
         int width = mBitmap.getWidth();
 
-        mImageColors = new HashBag();
-        HashBag leftImageColors = new HashBag();
+        mImageColors = new HashBag<Integer>();
+        HashBag<Integer> leftImageColors = new HashBag<Integer>();
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
                 if (x == 0) {
-                    leftImageColors.add(Integer.valueOf(mBitmap.getPixel(x, y)));
+                    leftImageColors.add(mBitmap.getPixel(x, y));
                 }
-                mImageColors.add(Integer.valueOf(mBitmap.getPixel(x, y)));
+                mImageColors.add(mBitmap.getPixel(x, y));
             }
         }
 
@@ -138,7 +136,7 @@ public class ColorArt {
         return proposedEdgeColor.getColor();
     }
 
-    private void findTextColors(HashBag colors) {
+    private void findTextColors(HashBag<Integer> colors) {
         Iterator<Integer> iterator = colors.iterator();
         int currentColor;
         ArrayList<CountedColor> sortedColors = new ArrayList<CountedColor>();
