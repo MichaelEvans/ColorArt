@@ -158,8 +158,10 @@ public class ColorArt {
 
         for (CountedColor currentContainer : sortedColors) {
             currentColor = currentContainer.getColor();
-            if (mPrimaryColor == null && isContrastingColor(currentColor, mBackgroundColor)) {
-                mPrimaryColor = currentColor;
+            if (mPrimaryColor == null) {
+                if (isContrastingColor(currentColor, mBackgroundColor)) {
+                    mPrimaryColor = currentColor;
+                }
             } else if (mSecondaryColor == null) {
                 if (!isDistinctColor(mPrimaryColor, currentColor) ||
                         !isContrastingColor(currentColor, mBackgroundColor)) {
