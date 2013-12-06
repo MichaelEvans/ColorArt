@@ -17,7 +17,7 @@ android {
     buildToolsVersion "19.0.0"
 
     defaultConfig {
-        minSdkVersion 15
+        minSdkVersion 14
         targetSdkVersion 19
         versionName project.VERSION_NAME
         versionCode Integer.parseInt(project.VERSION_CODE)
@@ -30,7 +30,7 @@ android {
 }
 
 dependencies {
-    compile 'commons-collections:commons-collections:3.2.1'
+
 }
 
 apply from: '../maven_push.gradle'
