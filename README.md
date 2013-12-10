@@ -4,7 +4,13 @@ ColorArt is a library that uses an image to create a themed image/text display. 
 
 ##Usage
 
-Right now you'll need to download and add this as a library project, but it will soon be available on Maven Central for use with Gradle.
+Add ColorArt as a dependency to your build.gradle file:
+
+```
+compile 'org.michaelevans.colorart:library:0.0.1'﻿
+```
+
+Then you can use the library like this:
 
 ```
 // get a bitmap and analyze it
