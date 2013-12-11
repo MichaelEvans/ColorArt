@@ -30,6 +30,14 @@ if (isReleaseBuild()) {
     sonatypeRepositoryUrl = "https://oss.sonatype.org/content/repositories/snapshots/"
 }
 
+def getRepositoryUsername() {
+    return hasProperty('NEXUS_USERNAME') ? NEXUS_USERNAME : ""
+}
+
+def getRepositoryPassword() {
+    return hasProperty('NEXUS_PASSWORD') ? NEXUS_PASSWORD : ""
+}
+
 afterEvaluate { project ->
     uploadArchives {
         repositories {
@@ -39,7 +47,7 @@ afterEvaluate { project ->
                 pom.artifactId = POM_ARTIFACT_ID
 
                 repository(url: sonatypeRepositoryUrl) {
-                    authentication(userName: NEXUS_USERNAME, password: NEXUS_PASSWORD)
+                    authentication(userName: getRepositoryUsername(), password: getRepositoryPassword())
                 }
 
                 pom.project {
