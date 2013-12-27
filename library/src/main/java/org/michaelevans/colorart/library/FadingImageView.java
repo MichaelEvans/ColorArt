@@ -21,7 +21,7 @@ public class FadingImageView extends ImageView {
     }
 
     private Shader mShader;
-    private Paint mPaint = new Paint();
+    private final Paint mPaint = new Paint();
     private int mBackgroundColor;
     private boolean mFadeEnabled = true;
     private FadeSide mFadeSide = FadeSide.LEFT;
