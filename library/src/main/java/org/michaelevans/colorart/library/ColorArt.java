@@ -109,13 +109,12 @@ public class ColorArt {
 
         Collections.sort(sortedColors);
 
-        CountedColor proposedEdgeColor = null;
         Iterator<CountedColor> sortedColorIterator = sortedColors.iterator();
         if (!sortedColorIterator.hasNext()) {
             return Color.BLACK;
         }
 
-        proposedEdgeColor = sortedColorIterator.next();
+        CountedColor proposedEdgeColor = sortedColorIterator.next();
         if (!proposedEdgeColor.isBlackOrWhite()) {
             return proposedEdgeColor.getColor();
         }
