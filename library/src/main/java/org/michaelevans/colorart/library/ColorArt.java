@@ -25,12 +25,12 @@ import java.util.Collections;
 import java.util.Iterator;
 
 public class ColorArt {
-    private double COLOR_THRESHOLD_MINIMUM_PERCENTAGE = 0.01;
-    private double EDGE_COLOR_DISCARD_THRESHOLD = 0.3;
-    private float MINIMUM_SATURATION_THRESHOLD = 0.15f;
-    private static String LOG_TAG = ColorArt.class.getSimpleName();
+    private final double COLOR_THRESHOLD_MINIMUM_PERCENTAGE = 0.01;
+    private final double EDGE_COLOR_DISCARD_THRESHOLD = 0.3;
+    private final float MINIMUM_SATURATION_THRESHOLD = 0.15f;
+    private static final String LOG_TAG = ColorArt.class.getSimpleName();
 
-    private Bitmap mBitmap;
+    private final Bitmap mBitmap;
 
     private HashBag<Integer> mImageColors;
     private int mBackgroundColor;
@@ -109,13 +109,12 @@ public class ColorArt {
 
         Collections.sort(sortedColors);
 
-        CountedColor proposedEdgeColor = null;
         Iterator<CountedColor> sortedColorIterator = sortedColors.iterator();
         if (!sortedColorIterator.hasNext()) {
             return Color.BLACK;
         }
 
-        proposedEdgeColor = sortedColorIterator.next();
+        CountedColor proposedEdgeColor = sortedColorIterator.next();
         if (!proposedEdgeColor.isBlackOrWhite()) {
             return proposedEdgeColor.getColor();
         }
@@ -271,8 +270,8 @@ public class ColorArt {
 
     private class CountedColor implements Comparable<CountedColor> {
 
-        private int mColor;
-        private int mCount;
+        private final int mColor;
+        private final int mCount;
 
         public CountedColor(int color, int count) {
             mColor = color;
