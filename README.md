@@ -4,10 +4,12 @@ ColorArt is a library that uses an image to create a themed image/text display. 
 
 ##Usage
 
+(ColorArt is supported on Android 2.1+.)
+
 Add ColorArt as a dependency to your build.gradle file:
 
 ```
-compile 'org.michaelevans.colorart:library:0.0.1'﻿
+compile 'org.michaelevans.colorart:library:0.0.2'﻿
 ```
 
 Then you can use the library like this:
