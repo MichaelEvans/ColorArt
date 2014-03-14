@@ -22,10 +22,12 @@ android {
         versionName project.VERSION_NAME
         versionCode Integer.parseInt(project.VERSION_CODE)
     }
-    release {
-        runProguard false
-        proguardFile 'proguard-rules.txt'
-        proguardFile getDefaultProguardFile('proguard-android-optimize.txt')
+    buildTypes {
+        release {
+           runProguard false
+           proguardFile 'proguard-rules.txt'
+           proguardFile getDefaultProguardFile('proguard-android-optimize.txt')
+        }
     }
 }
 
