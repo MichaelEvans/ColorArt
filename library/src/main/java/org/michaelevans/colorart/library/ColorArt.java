@@ -280,7 +280,7 @@ public class ColorArt {
 
         @Override
         public int compareTo(CountedColor another) {
-            return getColor() < another.getCount() ? -1 : (getCount() == another.getCount() ? 0 : 1);
+            return getCount() < another.getCount() ? -1 : (getCount() == another.getCount() ? 0 : 1);
         }
 
         public boolean isBlackOrWhite() {
