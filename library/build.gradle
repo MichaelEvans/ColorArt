@@ -1,20 +1,8 @@
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:0.12.2'
-    }
-}
 apply plugin: 'com.android.library'
-
-repositories {
-    mavenCentral()
-}
 
 android {
     compileSdkVersion 20
-    buildToolsVersion "20.0.0"
+    buildToolsVersion "21.1.2"
 
     defaultConfig {
         minSdkVersion 7
@@ -22,9 +10,10 @@ android {
         versionName project.VERSION_NAME
         versionCode Integer.parseInt(project.VERSION_CODE)
     }
+
     buildTypes {
         release {
-            runProguard false
+            minifyEnabled false
             proguardFile 'proguard-rules.txt'
             proguardFile getDefaultProguardFile('proguard-android-optimize.txt')
         }
