@@ -9,7 +9,7 @@ ColorArt is a library that uses an image to create a themed image/text display. 
 Add ColorArt as a dependency to your build.gradle file:
 
 ```
-compile 'org.michaelevans.colorart:library:0.0.2'﻿
+compile 'org.michaelevans.colorart:library:0.0.3'﻿
 ```
 
 Then you can use the library like this:
@@ -47,7 +47,7 @@ mImageView.setFadeEnabled(true/false);
 ##License
 
 ```
-Copyright 2013 Michael Evans
+Copyright 2015 Michael Evans
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
