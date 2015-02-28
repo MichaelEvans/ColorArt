@@ -37,9 +37,12 @@ public class DetailsActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
 
+        getActionBar().setHomeButtonEnabled(true);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+
         int position = 0;
         Bundle extras = getIntent().getExtras();
-        if(extras != null)
+        if (extras != null)
             position = extras.getInt("position");
 
         Bitmap album = BitmapFactory.decodeResource(getResources(), SampleData.imageIds[position]);
@@ -62,7 +65,7 @@ public class DetailsActivity extends Activity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        
+
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.details, menu);
         return true;
@@ -73,16 +76,19 @@ public class DetailsActivity extends Activity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
+
         int id = item.getItemId();
         if (id == R.id.action_fade) {
-            if(item.isChecked()){
+            if (item.isChecked()) {
                 mImageView.setFadeEnabled(true);
                 item.setChecked(false);
-            }else{
+            } else {
                 mImageView.setFadeEnabled(false);
                 item.setChecked(true);
             }
             return true;
+        } else if (id == android.R.id.home) {
+            onBackPressed();
         }
         return super.onOptionsItemSelected(item);
     }
