@@ -8,13 +8,13 @@ ColorArt is a library that uses an image to create a themed image/text display. 
 
 Add ColorArt as a dependency to your build.gradle file:
 
-```
+```groovy
 compile 'org.michaelevans.colorart:library:0.0.3'﻿
 ```
 
 Then you can use the library like this:
 
-```
+```java
 // get a bitmap and analyze it
 Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.album);
 ColorArt colorArt = new ColorArt(bitmap);
@@ -28,12 +28,12 @@ colorArt.getDetailColor()
 
 ###FadingImageView
 
-```
+```java
 mFadingImageView.setBackgroundColor(colorArt.getBackgroundColor(), FadingImageView.FadeSide.LEFT);
 ```
 This will set the fading edge on the left side, with that background color. You can also enable/disable the fade with:
 
-```
+```java
 mImageView.setFadeEnabled(true/false);
 ```
 
@@ -47,7 +47,7 @@ mImageView.setFadeEnabled(true/false);
 ##License
 
 ```
-Copyright 2015 Michael Evans
+Copyright 2016 Michael Evans
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
