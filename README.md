@@ -1,8 +1,8 @@
-##About
+## About
 
 ColorArt is a library that uses an image to create a themed image/text display. It's a port of the idea found on the [Panic Blog](http://www.panic.com/blog/itunes-11-and-colors/) to work on Android.
 
-##Usage
+## Usage
 
 (ColorArt is supported on Android 2.1+.)
 
@@ -26,7 +26,7 @@ colorArt.getSecondaryColor()
 colorArt.getDetailColor()
 ```
 
-###FadingImageView
+### FadingImageView
 
 ```
 mFadingImageView.setBackgroundColor(colorArt.getBackgroundColor(), FadingImageView.FadeSide.LEFT);
@@ -38,13 +38,13 @@ mImageView.setFadeEnabled(true/false);
 ```
 
 
-##Screenshots
+## Screenshots
 
 ![Jim Noir](https://github.com/MichaelEvans/ColorArt/raw/master/img/jim_noir.png)
 ![Ping Pong Orchestra](https://github.com/MichaelEvans/ColorArt/raw/master/img/ping_pong_orchestra.png)
 ![Hotel Shampoo](https://github.com/MichaelEvans/ColorArt/raw/master/img/hotel_shampoo.png)
 
-##License
+## License
 
 ```
 Copyright 2015 Michael Evans
